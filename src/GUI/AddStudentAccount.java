@@ -12,6 +12,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import Data.FileIO;
+import Data.SavingsAccount;
+import Data.BankAccount;
 
 public class AddStudentAccount extends JFrame {
 
@@ -99,25 +101,19 @@ public class AddStudentAccount extends JFrame {
 				}
 				else
 				{
-				try {
-					FileIO.bank.addAccount(name, bal, insname);
-				} catch (Exception e1) {
-					
-				}
-				int ch=JOptionPane.showConfirmDialog(getComponent(0), "Confirm?");
-				if(ch==0)
-				{
-					int index = 0;
-					try {
-						index = FileIO.bank.addAccount(name, bal, insname);
-					} catch (Exception e1) {
-						
-					}
-					DisplayList.arr.addElement(FileIO.bank.getAccounts()[index].toString());
-					//file.Write(FileIO.bank);
-					JOptionPane.showMessageDialog(getComponent(0),"Added Successfully");
-					dispose();
-				}
+				int ch = JOptionPane.showConfirmDialog(getComponent(0), "Confirm?");
+                                if (ch == 0) {
+                                   try {
+               BankAccount acc = new StudentAccount(name, bal, insname);
+        FileIO.bank.addAccount(acc);
+        DisplayList.arr.addElement(acc.toString());
+        JOptionPane.showMessageDialog(getComponent(0), "Added Successfully");
+        dispose();
+    } catch (Exception ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(getComponent(0), "Failed");
+    }
+}
 				else 
 				{
 					JOptionPane.showMessageDialog(getComponent(0),"Failed");

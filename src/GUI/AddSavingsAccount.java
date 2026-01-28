@@ -12,6 +12,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import Data.FileIO;
+import Data.SavingsAccount;
+import Data.BankAccount;
 
 public class AddSavingsAccount extends JFrame {
 
@@ -102,8 +104,9 @@ public class AddSavingsAccount extends JFrame {
 				int ch=JOptionPane.showConfirmDialog(getComponent(0), "Confirm?");
 				if(ch==0)
 				{
-					int index = FileIO.bank.addAccount(name, bal, maxw);
-					DisplayList.arr.addElement(FileIO.bank.getAccounts()[index].toString());
+					BankAccount acc = new SavingsAccount(name, bal, maxw);
+                                        FileIO.bank.addAccount(acc);
+                                        DisplayList.arr.addElement(acc.toString());
 					//file.Write(FileIO.bank);
 					JOptionPane.showMessageDialog(getComponent(0),"Added Successfully");
 					dispose();
