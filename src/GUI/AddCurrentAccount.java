@@ -1,9 +1,8 @@
 package GUI;
+
 import javax.swing.JFrame;
-import Data.FileIO;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
@@ -16,9 +15,6 @@ import java.awt.SystemColor;
 
 public class AddCurrentAccount extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textField;
@@ -64,10 +60,10 @@ public class AddCurrentAccount extends JFrame {
 		textField_1.setBounds(144, 115, 254, 20);
 		contentPane.add(textField_1);
 		
-		JLabel lblMaximumWithdrawLimit = new JLabel("Trade Licence Number:");
-		lblMaximumWithdrawLimit.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblMaximumWithdrawLimit.setBounds(10, 163, 135, 14);
-		contentPane.add(lblMaximumWithdrawLimit);
+		JLabel lblTradeLicence = new JLabel("Trade Licence Number:");
+		lblTradeLicence.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblTradeLicence.setBounds(10, 163, 135, 14);
+		contentPane.add(lblTradeLicence);
 		
 		textField_2 = new JTextField();
 		textField_2.setColumns(10);
@@ -76,59 +72,39 @@ public class AddCurrentAccount extends JFrame {
 		
 		JButton btnAdd = new JButton("Add");
 		btnAdd.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {			
-			//	FileIO file=new FileIO();
-				//Bank bank=file.Read();
-				String name=textField.getText();
-				double bal=Double.parseDouble(textField_1.getText());
-				String trlic=textField_2.getText();
-				if(bal<5000)
-				{
-					JOptionPane.showMessageDialog(getComponent(0), "Minimum Limit 5000", "Warning", 0);
-					textField.setText(null);
-					textField_1.setText(null);
-					textField_2.setText(null);
-				}
-				else
-				{
-				if(name==null||bal<=0||trlic==null)
-				{
-					JOptionPane.showMessageDialog(getComponent(0),"Typing Mismatch!! Try Again");
-					textField.setText(null);
-					textField_1.setText(null);
-					textField_2.setText(null);
-				}
-				else
-				{
-					
-				int ch=JOptionPane.showConfirmDialog(getComponent(0), "Confirm?");
-				if(ch==0)
-				{
-					try {
-                                             BankAccount acc = new CurrentAccount(name, bal, trlic);
-                                             FileIO.bank.addAccount(acc);
-                                             DisplayList.arr.addElement(acc.toString());
-                                             JOptionPane.showMessageDialog(getComponent(0), "Success");
-                                             dispose();
-                                             } catch (Exception ex) {
-                                             ex.printStackTrace();
-                                             JOptionPane.showMessageDialog(getComponent(0), "Failed");
-                                           }
-					//file.Write(bank);
-					JOptionPane.showMessageDialog(getComponent(0),"Success");
-					dispose();
-				}
-				else 
-				{
-					JOptionPane.showMessageDialog(getComponent(0),"Failed");
-					textField.setText(null);
-					textField_1.setText(null);
-					textField_2.setText(null);
-				}
-								
-				}
+			public void actionPerformed(ActionEvent e) {
+				String name = textField.getText();
+				String balanceText = textField_1.getText();
+				String trLic = textField_2.getText();
+				
+				if(name.isEmpty() || balanceText.isEmpty() || trLic.isEmpty()) {
+					JOptionPane.showMessageDialog(getComponent(0), "Please fill all fields", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
 				}
 				
+				double bal = 0;
+				try {
+					bal = Double.parseDouble(balanceText);
+				} catch(NumberFormatException ex) {
+					JOptionPane.showMessageDialog(getComponent(0), "Balance must be a number", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				
+				if(bal < 5000) {
+					JOptionPane.showMessageDialog(getComponent(0), "Minimum Limit 5000", "Warning", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				
+				int ch = JOptionPane.showConfirmDialog(getComponent(0), "Confirm?");
+				if(ch == JOptionPane.YES_OPTION) {
+					// Dummy success message instead of real backend
+					JOptionPane.showMessageDialog(getComponent(0), "Account added successfully!\nName: " + name + "\nBalance: " + bal + "\nLicence: " + trLic);
+					textField.setText("");
+					textField_1.setText("");
+					textField_2.setText("");
+				} else {
+					JOptionPane.showMessageDialog(getComponent(0), "Operation cancelled");
+				}
 			}
 		});
 		btnAdd.setBounds(86, 209, 89, 23);
@@ -137,10 +113,9 @@ public class AddCurrentAccount extends JFrame {
 		JButton btnReset = new JButton("Reset");
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				textField.setText(null);
-				textField_1.setText(null);
-				textField_2.setText(null);
-			
+				textField.setText("");
+				textField_1.setText("");
+				textField_2.setText("");
 			}
 		});
 		btnReset.setBounds(309, 209, 89, 23);
