@@ -1,8 +1,0 @@
-<project name="BankingSystem" default="build">
-    <target name="build">
-        <exec executable="mvn">
-            <arg value="clean"/>
-            <arg value="package"/>
-        </exec>
-    </target>
-</project>
