@@ -1,8 +1,20 @@
-<project name="BankingSystem" default="build">
-    <target name="build">
-        <exec executable="mvn">
-            <arg value="clean"/>
-            <arg value="package"/>
-        </exec>
+<project name="Project11" default="build" basedir=".">
+
+    <property name="src.dir" value="src"/>
+    <property name="build.dir" value="build"/>
+    <property name="classes.dir" value="${build.dir}/classes"/>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
     </target>
+
+    <target name="compile">
+        <mkdir dir="${classes.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false"/>
+    </target>
+
+    <target name="build" depends="clean,compile">
+        <echo message="Build completed successfully using Ant only."/>
+    </target>
+
 </project>
