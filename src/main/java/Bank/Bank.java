@@ -26,7 +26,11 @@ public class Bank {
     public void deposit(String accNum, double amt) {
         BankAccount acc = findAccount(accNum);
         if (acc != null) {
+             try {
             acc.deposit(amt);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         }
     }
 
@@ -34,7 +38,11 @@ public class Bank {
     public void withdraw(String accNum, double amt) {
         BankAccount acc = findAccount(accNum);
         if (acc != null) {
+            try {
             acc.withdraw(amt);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         }
     }
 
