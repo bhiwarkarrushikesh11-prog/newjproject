@@ -1,5 +1,6 @@
-FROM eclipse-temurin:21-jdk-alpine
+FROM tomcat:9-jdk21
 WORKDIR /app
-COPY app.war app.war
+RUN rm -rf /usr/local/tomcat/webapps/*
+COPY app.war /usr/local/tomcat/webapps/app.war
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","app.war"]
+
